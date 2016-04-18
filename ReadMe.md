@@ -62,7 +62,7 @@ Rackspace | ☑ | ☑| ☑| ☑ | ☑ | ☑| ☑ | ☑ | ☑
 
 **Planned Virtual File Adapters**
 
-Want to see a new adapter added? Let us know by opening a Github Issue.
+Want to see a new adapter added? Let us know by opening a [Github Issue](https://github.com/bigcompany/hook.io-vfs/issues/new).
 
 Adapter | upload | download | readFile | writeFile | createReadStream | createWriteStream | readdir | removeFile | stat
 --- | --- | --- | --- | --- | --- | --- | --- | --- | ---
