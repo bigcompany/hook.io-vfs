@@ -49,7 +49,7 @@ client.writeFile('hello.txt', 'i am a file!', function (err, file){
 
 ### All other `fs` operations
 
-Each adapter does it's best to maps `one-to-one` with the Node.js core `fs` module [API interface](https://nodejs.org/api/fs.html).
+Each adapter does it's best to map `one-to-one` with the Node.js core `fs` module [API interface](https://nodejs.org/api/fs.html).
 
 **Supported Virtual File Adapters**
 
