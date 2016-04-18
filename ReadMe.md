@@ -46,7 +46,6 @@ client.writeFile('hello.txt', 'i am a file!', function (err, file){
 `var readStream = vfs.download(path, contents);`
 
 
-
 ### All other `fs` operations
 
 Each adapter does it's best to map `one-to-one` with the Node.js core `fs` module [API interface](https://nodejs.org/api/fs.html).
@@ -55,11 +54,11 @@ Each adapter does it's best to map `one-to-one` with the Node.js core `fs` modul
 
 Adapter | upload | download | readFile | writeFile | createReadStream | createWriteStream | readdir | removeFile | stat
 --- | --- | --- | --- | --- | --- | --- | --- | --- | ---
-Amazon | [x] | [x]| [x]| [x] | [x] | [x]| [x] | [x] | [x] 
-Google | [x] | [x]| [x]| [x] | [x] | [x]| [x] | [x] | [x] 
-Microsoft | [x] | [x]| [x]| [x] | [x] | [x]| [x] | [x] | [x] 
-Rackspace | [x] | [x]| [x]| [x] | [x] | [x]| [x] | [x] | [x] 
-`SFTP` | [x] | [x]| [x]| [x] | [ ] | [ ]| [x] | [x] | [x] 
+Amazon | ☑ | ☑| ☑| ☑ | ☑ | ☑| ☑ | ☑ | ☑ 
+Google | ☑ | ☑| ☑| ☑ | ☑ | ☑| ☑ | ☑ | ☑ 
+Microsoft | ☑ | ☑| ☑| ☑ | ☑ | ☑| ☑ | ☑ | ☑ 
+Rackspace | ☑ | ☑| ☑| ☑ | ☑ | ☑| ☑ | ☑ | ☑ 
+`SFTP` | ☑ | ☑| ☑| ☑ | ☒ | ☒| ☑ | ☑ | ☑ 
 
 **Planned Virtual File Adapters**
 
@@ -67,7 +66,7 @@ Want to see a new adapter added? Let us know by opening a Github Issue.
 
 Adapter | upload | download | readFile | writeFile | createReadStream | createWriteStream | readdir | removeFile | stat
 --- | --- | --- | --- | --- | --- | --- | --- | --- | ---
-Dropbox | [ ] | [ ]| [ ]| [ ] | [ ] | [ ]| [ ] | [ ] | [ ] 
-Box.com | [ ] | [ ]| [ ]| [ ] | [ ] | [ ]| [ ] | [ ] | [ ] 
+Dropbox | ☐ | ☐| ☐| ☐ | ☐ | ☐| ☐ | ☐ | ☐ 
+Box.com | ☐ | ☐| ☐| ☐ | ☐ | ☐| ☐ | ☐ | ☐ 
 
 
