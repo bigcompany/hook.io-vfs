@@ -1,0 +1,22 @@
+ - vfs HTTP api
+ - vfs sdk api
+ - vfs hook service api
+ - vfs hot-code api
+
+ TODO:
+ 
+ Switch internal file-representation to use vinyl
+ see notes in code
+
+ Add special env vars: ???
+ Automated sdk configuration???
+
+  vfs_rackspace_api_key
+  vfs_rackspace_api_secret
+ 
+ Add roles: 
+
+  vfs::write
+  vfs::read
+  vfs::destroy
+ 
