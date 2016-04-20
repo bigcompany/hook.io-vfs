@@ -1,6 +1,11 @@
 var config = {};
 module['exports'] = config;
 
+config.http = {
+  port: 9998,
+  host: "0.0.0.0"
+};
+
 config.adapters = {
   amazon: {
     provider: 'amazon',
