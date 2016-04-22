@@ -13,9 +13,10 @@ You are encouraged to use this module as-is, or modify it to suite your needs. I
 ## Features
 
  - Provides a Virtual Filesystem for all major cloud storage providers
- - Provides a Virtual Filesystems over `SSH` / `SFTP`
+ - Provides a Virtual Filesystem over `SSH` / `SFTP`
  - Provides unified filesystem API which maps `one-to-one` with Node.js core `fs` module
- - 117+ passing integration tests
+ - Uses [Vinyl](https://github.com/gulpjs/vinyl) Virtual File representation for all files
+ - 212+ passing integration tests
 
 ### API
 

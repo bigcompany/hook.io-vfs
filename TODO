@@ -1,12 +1,15 @@
- - vfs HTTP api
  - vfs sdk api
- - vfs hook service api
- - vfs hot-code api
+   - perform simple http mapping - vfs / files / fs ?
+   - 30% there, blocked on HTTP API
+ - vfs integration tests
+   - hook.io-integration
+   - 20%, blocked on vfs sdk
 
- TODO:
- 
- Switch internal file-representation to use vinyl
- see notes in code
+ - vfs hook service api
+   - should ship with sdk changes
+
+ - vfs hot-code api
+   - should ship with sdk changes
 
  Add special env vars: ???
  Automated sdk configuration???
