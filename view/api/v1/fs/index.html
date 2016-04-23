@@ -1,0 +1,55 @@
+<div style="font-size:22px;text-align:left;">
+
+  <h1>Multi-Cloud File Storage<h1>
+  <h2>A simple File System API capable of communicating with all major cloud file storage providers</h2>
+
+  <p>
+    Hook.io's File API allows developers to seamlessly work with files from multiple remote storage providers
+  </p>
+  
+  <ul class="supportedAdapters">
+    <li>Amazon S3</li>
+    <li>Google Cloud</li>
+    <li>Rackspace Cloudfiles</li>
+    <li>Microsoft Azure</li>
+    <li>Any SSH / SFTP server</li>
+  </ul>
+
+  <!--
+  <div class="root">
+    <p>Current Datastore Root: <a href="#" class="currentRoot">loading...</a></p>
+    <p class="hint"><a href="/auth">Log in to see you own data</a></p>
+  </div>
+
+  <div class="last">
+    <h2>Your latests records</h2>
+    <ul class="lastKeys">
+      <li>list items go here</li>
+    </ul>
+  </div>
+  -->
+  <h2>File HTTP API</h2>
+  <div class="api" role="main">
+    <h3>Simple Upload / Download Methods</h3>
+    <em>These methods will either accept a callback or return a stream depending on the arguments passed in</em><br/>
+    <em>Note: The upload and download API are simple wrappers around the methods found below</em><br/>
+    <a href="/files/upload">upload</a><br>
+    <a href="/files/download">download</a><br>
+    
+    <h3>File System Methods</h3>
+    <a href="/files/createReadStream">createReadStream</a><br>
+    <a href="/files/createWriteStream">createWriteStream</a><br>
+    <a href="/files/readFile">readFile</a><br>
+    <a href="/files/readdir">readdir</a><br>
+    <a href="/files/removeFile">removeFile</a><br>
+    <a href="/files/stat">stat</a><br>
+    <a href="/files/writeFile">writeFile</a><br>
+  </div>
+ 
+  <!--
+  <h2>Datastore Example:</h3> <br/><br/>
+  <div data-gist="57408d6e745479c4a2d7">Loading Gist...</div>
+  -->
+  <br/>
+  <br/>
+</div>

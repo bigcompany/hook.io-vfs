@@ -8,17 +8,17 @@ module['exports'] = function writeFilePresenter (opts, cb) {
       message: "`path` is a required parameter!"
     });
   }
-  if (typeof params.content !== "string" || params.content.length === 0) {
+  if (typeof params.contents !== "string" || params.contents.length === 0) {
     return res.json({
       error: true,
-      message: "`content` is a required parameter!"
+      message: "`contents` is a required parameter!"
     });
   }
-  req.vfs.writeFile(params.path, params.content, function (err, file) {
+  req.vfs.writeFile(params.path, params.contents, function (err, file) {
     if (err) {
       return res.end(err.message);
     }
-    res.json(file);
+    res.json(file.toJSON());
   });
 };
 
