@@ -10,33 +10,33 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Multi-Cloud Files</h3>
               <ul class="sidebar_menu">
-                <li><a href="#how-to-use">How to use Files</a></li>
-                <li><a href="#hooks">Inside Hooks </a></li>
-                <li><a href="#api">HTTP API </a></li>
-                <li><a href="#sdk">Client SDK </a></li>
+                <li><a href="{{appUrl}}/files#how-to-use">How to use Files</a></li>
+                <li><a href="{{appUrl}}/files#hooks">Inside Hooks </a></li>
+                <li><a href="{{appUrl}}/files#api">HTTP API </a></li>
+                <li><a href="{{appUrl}}/files#sdk">Client SDK </a></li>
               </ul>
             </aside>
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Files API</h3>
               <ul class="sidebar_menu">
-                <li><a href="/files/writeFile">writeFile</a></li>
-                <li><a href="/files/readFile">readFile</a></li>
-                <li><a href="/files/removeFile">removeFile</a></li>
-                <li><a href="/files/stat">stat</a></li>
-                <li><a href="/files/readdir">readdir</a></li>
-                <li><a href="/files/createReadStream">createReadStream</a></li>
-                <li><a href="/files/createWriteStream">createWriteStream</a></li>
+                <li><a href="{{appUrl}}/files/writeFile">writeFile</a></li>
+                <li><a href="{{appUrl}}/files/readFile">readFile</a></li>
+                <li><a href="{{appUrl}}/files/removeFile">removeFile</a></li>
+                <li><a href="{{appUrl}}/files/stat">stat</a></li>
+                <li><a href="{{appUrl}}/files/readdir">readdir</a></li>
+                <li><a href="{{appUrl}}/files/createReadStream">createReadStream</a></li>
+                <li><a href="{{appUrl}}/files/createWriteStream">createWriteStream</a></li>
               </ul>
             </aside>
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Providers</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">Built-in Virtual File System </a></li>
-                <li><a href="#amazon">Amazon S3 </a></li>
-                <li><a href="#google">Google Cloud </a></li>
-                <li><a href="#rackspace">Rackspace Cloudfiles </a></li>
-                <li><a href="#microsoft">Microsoft Azure </a></li>
-                <li><a href="#sftp-ssh">Any SSH / SFTP server </a></li>
+                <li><a href="{{appUrl}}/files#built-in">Built-in Virtual File System </a></li>
+                <li><a href="{{appUrl}}/files#amazon">Amazon S3 </a></li>
+                <li><a href="{{appUrl}}/files#google">Google Cloud </a></li>
+                <li><a href="{{appUrl}}/files#rackspace">Rackspace Cloudfiles </a></li>
+                <li><a href="{{appUrl}}/files#microsoft">Microsoft Azure </a></li>
+                <li><a href="{{appUrl}}/files#sftp-ssh">Any SSH / SFTP server </a></li>
               </ul>
             </aside>
             <!-- widget-categories end -->
@@ -55,18 +55,20 @@
               <div>
 
                 <p>
-                  {{appName}}'s provides a Virtual File System API allowing developers to seamlessly work with files from <a href="#providers">multiple cloud storage providers</a>.
+                  {{appName}}'s provides a Virtual File System API allowing developers to seamlessly work with files from <a href="{{appUrl}}/files#providers">multiple cloud storage providers</a>.
                 </p>
 
+                <p>All accounts come with integrated access to our own <a href="{{appName}}/files#built-in">Built-in virtual file-system</a>. This allows developers to instant store and retrieve files without having to provision or configure any addition providers</p>
+                <p>Should you want more control over your files and use your storage provider, {{appName}} provides integrated configuration for all major cloud storage providers</p>
 
                 <a name="how-to-use"></a>
                 <h2>There are three separate ways to use Multi-Cloud Files</h2>
 
                 <p>
                   <ul>
-                    <li>Using the {{appName}} <a href="#api">HTTP REST API</a></li>
-                    <li>Using <code>hook.fs</code> from <a href="#hooks">inside a hook service</a></a>
-                    <li>Using the <a href="#sdk">hook.io sdk</a>
+                    <li>Using the {{appName}} <a href="{{appUrl}}/files#api">HTTP REST API</a></li>
+                    <li>Using <code>hook.fs</code> from <a href="{{appUrl}}/files#hooks">inside a hook service</a></a>
+                    <li>Using the <a href="{{appUrl}}/files#sdk">hook.io sdk</a>
                   </ul>
                 </p>
 
@@ -74,16 +76,16 @@
                 <a name="api"></a>
                 <h2>Files HTTP API</h2>
                 <p>Simply click on any method name below to visit the REST API endpoint for that File method.</p>
-                <p>Every URL is a fully qualified self documenting API endpoint, capable of <a href="/docs#data">receiving many forms of data</a>.</p>
+                <p>Every URL is a fully qualified self documenting API endpoint, capable of <a href="{{appUrl}}/docs#data">receiving many forms of data</a>.</p>
                 <p>
                 <ul>
-                  <li><a href="/files/createReadStream">createReadStream</a></li>
-                  <li><a href="/files/createWriteStream">createWriteStream</a></li>
-                  <li><a href="/files/readFile">readFile</a></li>
-                  <li><a href="/files/readdir">readdir</a></li>
-                  <li><a href="/files/removeFile">removeFile</a></li>
-                  <li><a href="/files/stat">stat</a></li>
-                  <li><a href="/files/writeFile">writeFile</a></li>
+                  <li><a href="{{appUrl}}/files/createReadStream">createReadStream</a></li>
+                  <li><a href="{{appUrl}}/files/createWriteStream">createWriteStream</a></li>
+                  <li><a href="{{appUrl}}/files/readFile">readFile</a></li>
+                  <li><a href="{{appUrl}}/files/readdir">readdir</a></li>
+                  <li><a href="{{appUrl}}/files/removeFile">removeFile</a></li>
+                  <li><a href="{{appUrl}}/files/stat">stat</a></li>
+                  <li><a href="{{appUrl}}/files/writeFile">writeFile</a></li>
                 </ul>
                 </p>
 
@@ -91,25 +93,18 @@
                 <h2>Supported Cloud File Providers</h2>
                 <p>
                   <ul class="supportedAdapters">
-                    <li><a href="#sftp-ssh">Any SSH / SFTP server </a></li>
-                    <li><a href="#">Built-in Virtual File System </a></li>
-                    <li><a href="#amazon">Amazon S3 </a></li>
-                    <li><a href="#google">Google Cloud </a></li>
-                    <li><a href="#rackspace">Rackspace Cloudfiles </a></li>
-                    <li><a href="#microsoft">Microsoft Azure </a></li>
+                    <li><a href="{{appUrl}}/files#built-in">Built-in Virtual File System </a></li>
+                    <li><a href="{{appUrl}}/files#sftp-ssh">Any SSH / SFTP server </a></li>
+                    <li><a href="{{appUrl}}/files#amazon">Amazon S3 </a></li>
+                    <li><a href="{{appUrl}}/files#google">Google Cloud </a></li>
+                    <li><a href="{{appUrl}}/files#rackspace">Rackspace Cloudfiles </a></li>
+                    <li><a href="{{appUrl}}/files#microsoft">Microsoft Azure </a></li>
                   </ul>
                 </p>
                 <!--
                   <p><em class="hint">Want to see a new provider? Please open an issue <a href="https://github.com/bigcompany/hook.io-vfs/issues/new">here</a> and we'll do our best to add it.</em></p>
                 -->
 
-                <a name="#built-in"></a>
-
-                <h2>Built-in Virtual File-System</h2>
-                <p>Don't want to provision a new account with one of our supported cloud providers? We've got you covered!</p>
-                <p>Built into every {{appName}} account is an integrated virtual file system which allows you to seamlessly manage files using a familiar API</p>
-
-                <hr/>
 
                 <a name="hooks"></a>
                 <h2>Inside a Hook Service</h2>
@@ -144,10 +139,27 @@ client.files.readFile('hello.txt', function (err, file) {
                   </pre></code>
                 </p>
 
-                <!--
-                <h2>Datastore Example:</h3> <br/><br/>
-                <div data-gist="57408d6e745479c4a2d7">Loading Gist...</div>
-                -->
+                <a name="built-in"></a>
+
+                <h2>Built-in Virtual File-System</h2>
+                <p>Don't want to provision a new account with one of our supported cloud providers? We've got you covered!</p>
+                <p>Built into every {{appName}} account is an integrated virtual file system which allows you to seamlessly manage files using a familiar API</p>
+                <p>
+                  <div class="hook">
+                    <code><pre>
+module['exports'] = function readFile (hook) {
+  hook.fs.readFile('testing-file.txt', function(err, res){
+    if (err){ 
+      return res.end(err.message); 
+    }
+    hook.res.end(JSON.stringify(res, true, 2));
+  });
+};
+                    </pre></code>
+                  </div>
+                </p>
+
+                <hr/>
 
                 <a name="sftp-ssh"></a>
                 <h3>Any SFTP / SSH Server</h3>

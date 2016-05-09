@@ -8,6 +8,24 @@ module['exports'] = function layout (opts, cb) {
   req = opts.req,
   res = opts.res;
 
+  // generic white-label function for performing {{mustache}} style replacements of site data
+  // Note: Site requires absolute links ( no relative links! )
+  req.white = function whiteLabel ($, opts) {
+    var out = $.html();
+    var appName = "hook.io",
+        appAdminEmail = "hookmaster@hook.io",
+        appPhonePrimary = "1-917-267-2516";
+        console.log('ccc', config)
+    out = out.replace(/\{\{appName\}\}/g, appName);
+    out = out.replace(/\{\{appDomain\}\}/g, config.app.domain);
+    out = out.replace(/\{\{appUrl\}\}/g, config.app.url);
+    out = out.replace(/\{\{appAdminEmail\}\}/g, appAdminEmail);
+    out = out.replace(/\{\{appPhonePrimary\}\}/g, appPhonePrimary);
+    return $.load(out);
+  };
+
+  $ = req.white($);
+
   psr(req, res, function(req, res, fields){
     var params = req.resource.params;
     // validate incoming API request for correct adapter information
