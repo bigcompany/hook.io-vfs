@@ -15,15 +15,16 @@ tap.test('require the vfs module', function (t) {
 function testAdapter (adapter) {
   var client;
   
-  var testFile = 'test-file-0.txt',
-      testRoot = 'hookio-vfs',
+  var testFile = 'test-file-1.txt',
+      testRoot = '',
       adapterCanStream = true;
 
   if (adapter === "sftp") {
-    testRoot = ".";
+    testRoot = "";
   }
   var adapterConfig = config.adapters[adapter];
   adapterConfig.adapter = adapter;
+  adapterConfig.root = "tmp";
   tap.test(adapter + ' - create a new vfs client', function (t) {
     // diffirent adapters have diffirent configuration options
     client = vfs.createClient(adapterConfig);
@@ -289,20 +290,17 @@ function testAdapter (adapter) {
       t.error(err, 'did not error');
       t.equal(file, "removing", "return 'removing' status");
       t.end();
-      return;
-      client.removeFile('upload-stream-test-file.txt', function (err, file) {
-        t.error(err, 'did not error');
-        t.equal(file, "removing", "return 'removing' status");
-        t.end();
-      });
     });
   });
 
 };
 
+// rackspace now has failing tests? need to fix. 
+// might just be timing issues with tests running too fast
+testAdapter('rackspace');
+return;
 testAdapter('sftp');
 testAdapter('google');
 testAdapter('microsoft');
-testAdapter('rackspace');
 testAdapter('amazon');
-testAdapter('google');
+//return;
