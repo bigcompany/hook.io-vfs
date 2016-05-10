@@ -2,7 +2,7 @@ module['exports'] = function readdirPresenter (opts, cb) {
   var req = opts.req,
       res = opts.res;
   var params = req.resource.params;
-  if (typeof params.path !== "string" || params.path.length === 0) {
+  if (typeof params.path !== "string") {
     return res.json({
       error: true,
       message: "`path` is a required parameter!"
