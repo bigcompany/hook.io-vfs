@@ -8,7 +8,26 @@ module['exports'] = function createWriteStreamPresenter (opts, cb) {
       message: "`path` is a required parameter!"
     });
   }
-  res.pipe(req.vfs.createWriteStream(params.path))
+
+  var writeStream = req.vfs.createWriteStream(params.path);
+
+  req.on('data', function(d){
+    writeStream.write(d);
+  });
+
+  writeStream.on('data', function(d){
+    try {
+      res.write(d)
+    } catch (err) {
+      console.log('error writing to stream', d)
+    }
+  });
+
+  req.on('end', function(){
+    writeStream.end();
+    res.end();
+  });
+
 };
 
 // module['exports'].route = "/:path";

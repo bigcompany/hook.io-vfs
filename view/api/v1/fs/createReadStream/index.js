@@ -8,7 +8,12 @@ module['exports'] = function createReadStreamPresenter (opts, cb) {
       message: "`path` is a required parameter!"
     });
   }
-  req.vfs.createReadStream(params.path).pipe(res);
+  var readStream = req.vfs.createReadStream(params.path);
+  readStream.on('error', function (err) {
+    // TODO: better 404 errors / better stream errors
+    res.json(err);
+  });
+  readStream.pipe(res);
 };
 
 // module['exports'].route = "/:path";
