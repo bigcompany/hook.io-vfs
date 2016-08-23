@@ -3,10 +3,7 @@ module['exports'] = function readdirPresenter (opts, cb) {
       res = opts.res;
   var params = req.resource.params;
   if (typeof params.path !== "string") {
-    return res.json({
-      error: true,
-      message: "`path` is a required parameter!"
-    });
+    params.path = "";
   }
   req.vfs.readdir(params.path, function (err, file) {
     if (err) {
@@ -15,5 +12,3 @@ module['exports'] = function readdirPresenter (opts, cb) {
     res.json(file);
   });
 };
-
-// module['exports'].route = "/:path";

@@ -15,7 +15,6 @@ module['exports'] = function layout (opts, cb) {
     var appName = "hook.io",
         appAdminEmail = "hookmaster@hook.io",
         appPhonePrimary = "1-917-267-2516";
-        console.log('ccc', config)
     out = out.replace(/\{\{appName\}\}/g, appName);
     out = out.replace(/\{\{appDomain\}\}/g, config.app.domain);
     out = out.replace(/\{\{appUrl\}\}/g, config.app.url);
@@ -54,6 +53,9 @@ module['exports'] = function layout (opts, cb) {
       "/readFile": {
         role: "files::readFile"
       },
+      "/": {
+        role: "files::readdir"
+      },
       "/readdir": {
         role: "files::readdir"
       },
@@ -72,35 +74,41 @@ module['exports'] = function layout (opts, cb) {
 
     var _role = mappings[parsed] || "none";
 
+    // this is important for security, as you probably don't want every request getting access to a vfs client
+    // use the built in RBAC system or override at your own risk
+    function bindClientToRequest () {
+      //console.log('using config', params.adapter, config.adapters[params.adapter])
+      //console.log('owner', req.resource.owner)
+      // TODO: merge over with any sent in config options
+      var _config = {};
+      for(var p in config.adapters[params.adapter]) {
+        _config[p] = config.adapters[params.adapter][p];
+      }
+
+      if (req.resource.params && typeof req.resource.params.files === "object") {
+        for(var p in req.resource.params.files) {
+          _config[p] = req.resource.params.files[p];
+        }
+      }
+
+      _config.root = req.resource.owner;
+      // console.log('using API config', _config);
+      var client = vfs.createClient(_config);
+      req.vfs = client;
+    };
+
     if (_role === "none") {
+      console.log('no role access found, will not create client...');
+      console.log("WARNING binding anyway");
+      bindClientToRequest();
       return cb(null, $.html());
     }
     _role = _role.role;
-
     checkRoleAccess({ req: opts.req, res: opts.res, role: _role }, function (err, hasPermission) {
-      //console.log("ROLE CHECK", err, hasPermission)
       if (!hasPermission) {
         return res.end(unauthorizedRoleAccess(req, _role));
       } else {
-
-        //console.log('using config', params.adapter, config.adapters[params.adapter])
-        //console.log('owner', req.resource.owner)
-        // TODO: merge over with any sent in config options
-        var _config = {};
-        for(var p in config.adapters[params.adapter]) {
-          _config[p] = config.adapters[params.adapter][p];
-        }
-
-        if (req.resource.params && typeof req.resource.params.files === "object") {
-          for(var p in req.resource.params.files) {
-            _config[p] = req.resource.params.files[p];
-          }
-        }
-
-        _config.root = req.resource.owner;
-        // console.log('using API config', _config);
-        var client = vfs.createClient(_config);
-        req.vfs = client;
+        bindClientToRequest();
         return cb(null, $.html());
       }
     });

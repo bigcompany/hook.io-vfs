@@ -21,6 +21,6 @@
     "ssh2": "^0.5.0",
     "stream-buffers": "^3.0.0",
     "through2": "^2.0.1",
-    "vinyl": "^1.1.1"
+    "vinyl": "https://github.com/marak/vinyl/tarball/master"
   }
 }
