@@ -8,8 +8,8 @@ module['exports'] = function view (opts, callback) {
     resp.forEach(function(item){
       //console.log('file', item.toJSON());
       //console.log(req.session.user)
-      //var pathWithoutRoot = item.path.replace(req.session.user + "/", '');
-      var link = '<a href="/files/readFile?path=' + item + '">' + item + '</a>';
+      var pathWithoutRoot = item.name.replace(req.session.user + "/", '');
+      var link = '<a href="/files/readFile?path=' + pathWithoutRoot + '">' + pathWithoutRoot + '</a>';
       $('.userFiles table').append('<tr><td>' + link + '</td>'); //'<td>' + item.basename + '</td></tr>');
     });
     //$('.userFiles').html(JSON.stringify(resp, true, 2));
