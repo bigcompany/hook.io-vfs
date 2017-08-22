@@ -102,6 +102,7 @@ module['exports'] = function layout (opts, cb) {
     _role = _role.role;
     checkRoleAccess({ req: opts.req, res: opts.res, role: _role }, function (err, hasPermission) {
       if (!hasPermission) {
+        res.writeHead(403);
         return res.end(unauthorizedRoleAccess(req, _role));
       } else {
         bindClientToRequest();
