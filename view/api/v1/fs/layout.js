@@ -42,7 +42,6 @@ module['exports'] = function layout (opts, cb) {
       return res.end('missing opts.unauthorizedRoleAccess - using default invalid access callback');
     }
 
-
     var mappings = {
       "/writeFile": {
         role: "files::writeFile"
@@ -52,9 +51,6 @@ module['exports'] = function layout (opts, cb) {
       },
       "/readFile": {
         role: "files::readFile"
-      },
-      "/": {
-        role: "files::readdir"
       },
       "/readdir": {
         role: "files::readdir"
