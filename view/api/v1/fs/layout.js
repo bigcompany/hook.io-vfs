@@ -87,7 +87,7 @@ module['exports'] = function layout (opts, cb) {
         }
       }
 
-      _config.root = req.resource.owner;
+      _config.root = req.resource.owner || req.session.user;
       // console.log('using API config', _config);
       var client = vfs.createClient(_config);
       req.vfs = client;
