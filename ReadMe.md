@@ -13,24 +13,54 @@ You are encouraged to use this module as-is, or modify it to suite your needs. I
 ## Features
 
  - Provides a Virtual Filesystem for all major cloud storage providers
- - Provides a Virtual Filesystem over `SSH` / `SFTP`
+   - Amazon S3
+   - Google Cloud Files
+   - Azure Cloud Files
+   - Rackspace Cloud Files
+   - Any `SSH` / `SFTP` server!
  - Provides unified filesystem API which maps `one-to-one` with Node.js core `fs` module
- - Uses [Vinyl](https://github.com/gulpjs/vinyl) Virtual File representation for all files
- - 212+ passing integration tests
+   - Can be used as drop-in replacement for `require('fs')` module
+   - Use familiar methods like `readFile`, `writeFile`, `createReadStream`, `createWriteStream`
+   - Provides additional [Vinyl](https://github.com/gulpjs/vinyl) Virtual File representation files
 
-### API
-
-**Creating a new Client**
-
-see: `config/index.js` for configuration `options`
+## Example
 
 ```js
 var vfs = require('hook.io-vfs');
-var client = vfs.createClient(options);
-client.writeFile('hello.txt', 'i am a file!', function (err, file){
-  console.log(err, file)
+
+var client = vfs.createClient({
+  google: {
+    adapter: "google",
+    keyFilename: '/path/to/google.json', // path to a google JSON key file
+    projectId: 'my-project'
+  }
 });
+
+client.writeFile('hello.txt', 'i am a file!', function (err, vinyl){
+  console.log(err, vinyl);
+  //  "vinyl" contains representation of file ( stats / metadata ) 
+});
+
+client.readFile('hello.txt', function (err, file, vinyl){
+  console.log(err, file, vinyl);
+  // "file" is Buffer of file contents ( same as Node.js `fs.readFile` )
+  // "vinyl" is a https://github.com/gulpjs/vinyl object
+});
+
+client.readdir('.', function (err, dir, vinyl){
+  console.log(err, dir, vinyl);
+  // "dir" is array of file names ( same as Node.js `fs.readdir` )
+  // "vinyl" is an array of https://github.com/gulpjs/vinyl objects
+})
+
 ```
+
+see: `config/index.js` property `config.adapters` for additional adapter / provider options
+
+
+
+## API
+
 
 ### Uploading / Downloading Files
 
