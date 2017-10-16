@@ -8,16 +8,14 @@ module['exports'] = function readFilePresenter (opts, cb) {
       message: "`path` is a required parameter!"
     });
   }
-  req.vfs.readFile(params.path, function (err, file) {
+  req.vfs.readFile(params.path, function (err, file, vinyl) {
     if (err) {
       return res.end(err.message);
     }
-    if (typeof params.raw !== 'undefined') {
-      // TODO: set header response based on mime type
-      // TODO: make separate function
-      res.end(file.contents);
-    } else {
-      res.json(file);
+    if (params.vinyl === true) {
+      res.json(vinyl);
+    } {
+      res.end(file)
     }
   });
 };

@@ -8,11 +8,15 @@ module['exports'] = function statPresenter (opts, cb) {
       message: "`path` is a required parameter!"
     });
   }
-  req.vfs.stat(params.path, function (err, file) {
+  req.vfs.stat(params.path, function (err, stat, vinyl) {
     if (err) {
       return res.end(err.message);
     }
-    res.json(file);
+    if (params.vinyl === true) {
+      res.json(vinyl);
+    } {
+      res.end(stat)
+    }
   });
 };
 
