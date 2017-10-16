@@ -1,6 +1,7 @@
 var tap = require("tape");
 var streamBuffers = require('stream-buffers');
 var config = require('../config/production');
+var fs = require('fs');
 var File = require('vinyl');
 
 // Remark: Sometimes amazon tests don't pass ( updates take a few moments on amazon cloud to propigate )
@@ -34,11 +35,12 @@ function testAdapter (adapter) {
 
   // callback style APIs
   tap.test(adapter + ' - vfs.readdir - read a directory', function (t) {
-    client.readdir(testRoot, function (err, files) {
+    client.readdir(testRoot, function (err, dir, vinyl) {
       t.error(err, 'did not error');
-      t.equal(files instanceof Array, true, "returned array");
-      t.equal(files[0] instanceof File, true, "found a vinyl file");
-      t.end();
+      t.equal(dir instanceof Array, true, "returned array of file names");
+      t.equal(vinyl instanceof Array, true, "returned array of vinyl names");
+      t.equal(vinyl[0] instanceof File, true, "found a vinyl file");
+      t.end('read a directory');
     });
   });
 
@@ -47,27 +49,68 @@ function testAdapter (adapter) {
       t.error(err, 'did not error');
       t.equal(file instanceof File, true, "found a vinyl file");
       t.equal(file.path, testFile);
-      t.end();
+      t.end('created a new file');
     });
   });
 
   tap.test(adapter + ' - vfs.stat - get stat on newly created file', function (t) {
-    client.stat(testFile, function (err, file) {
+    // perform fs.stat of local file to compare structures of stat object
+    var fsStat = fs.statSync(__dirname + '/fixtures/hello.txt');
+    client.stat(testFile, function (err, stat, vinyl) {
       t.error(err, 'did not error');
-      t.equal(typeof file, 'object');
-      t.equal(file instanceof File, true, "found a vinyl file");
-      t.equal(file.path, testFile);
-      t.end();
+      t.equal(typeof stat, 'object');
+      t.equal(stat.size, 11); // hard-coded to size of file
+      t.equal(stat.atime instanceof Date, true, "found a vinyl file");
+      t.equal(stat.mtime instanceof Date, true, "found a vinyl file");
+      t.equal(stat.ctime instanceof Date, true, "found a vinyl file");
+      t.equal(typeof vinyl, 'object');
+      t.equal(vinyl instanceof File, true, "found a vinyl file");
+      t.equal(vinyl.path, testFile);
+      t.end('performed state on new file');
     });
   });
 
   tap.test(adapter + ' - vfs.readFile - read newly created file', function (t) {
-    client.readFile(testFile, function (err, file) {
+    client.readFile(testFile, function (err, file, vinyl) {
       t.error(err, 'did not error');
-      t.equal(file.contents.toString(), 'hello tests');
-      t.equal(file instanceof File, true, "found a vinyl file");
-      t.equal(file.path, testFile);
-      t.end();
+
+      // TODO: is-buffer check
+      // t.equal(isBuffer(file), true, 'returned file as buffer');
+      t.equal(file.toString(), 'hello tests', 'returned file as buffer');
+
+      t.equal(vinyl.contents.toString(), 'hello tests');
+      t.equal(vinyl instanceof File, true, "found a vinyl file");
+      t.equal(vinyl.path, testFile);
+
+      t.end('read new file');
+    });
+  });
+
+  tap.test(adapter + ' - vfs.readFile - read newly created file - with "/" path', function (t) {
+    client.readFile('./' + testFile, function (err, file, vinyl) {
+      t.error(err, 'did not error');
+      // TODO: is-buffer check
+      // t.equal(isBuffer(file), true, 'returned file as buffer');
+      t.equal(file.toString(), 'hello tests', 'returned file as buffer');
+
+      t.equal(vinyl.contents.toString(), 'hello tests');
+      t.equal(vinyl instanceof File, true, "found a vinyl file");
+      t.equal(vinyl.path, testFile);
+      t.end('read new file');
+    });
+  });
+
+  tap.test(adapter + ' - vfs.readFile - read newly created file - with "./" path', function (t) {
+    client.readFile('/' + testFile, function (err, file, vinyl) {
+      t.error(err, 'did not error');
+      // TODO: is-buffer check
+      // t.equal(isBuffer(file), true, 'returned file as buffer');
+      t.equal(file.toString(), 'hello tests', 'returned file as buffer');
+
+      t.equal(vinyl.contents.toString(), 'hello tests');
+      t.equal(vinyl instanceof File, true, "found a vinyl file");
+      t.equal(vinyl.path, testFile);
+      t.end('read new file');
     });
   });
 
@@ -76,20 +119,24 @@ function testAdapter (adapter) {
       t.error(err, 'did not error');
       t.equal(file instanceof File, true, "found a vinyl file");
       t.equal(file.path, testFile);
-      t.end();
+      t.end('updated the file');
     });
   });
 
   tap.test(adapter + ' - vfs.readFile - read updated file', function (t) {
-    client.readFile(testFile, function (err, file) {
+    client.readFile(testFile, function (err, file, vinyl) {
       t.error(err, 'did not error');
-      t.equal(file instanceof File, true, "found a vinyl file");
-      t.equal(file.path, testFile);
-      t.equal(file.contents.toString(), 'hello update');
-      t.end();
+      // TODO: is-buffer check
+       // t.equal(isBuffer(file), true, 'returned file as buffer');
+       t.equal(file.toString(), 'hello update', 'returned file as buffer');
+       t.equal(vinyl.contents.toString(), 'hello update');
+       t.equal(vinyl instanceof File, true, "found a vinyl file");
+       t.equal(vinyl.path, testFile);
+      t.end('read updated file');
     });
   });
 
+  // TODO: is this not working?
   tap.test(adapter + ' - vfs.removeFile - clean up test file test', function (t) {
     client.removeFile(testFile, function (err, file) {
       t.error(err, 'did not error');
@@ -98,16 +145,14 @@ function testAdapter (adapter) {
     });
   });
 
+  /* TODO: non-uniform error messages for readFile 404 from pkgcloud */
 
-  /* TODO: non-uniform error messages for readFile 404 from pkgcloud
-  tap.test(adapter + ' - vfs.readFile - try to read deleted test file', function (t) {
+  tap.test(adapter + ' - vfs.readFile - try to read non-existent test file', function (t) {
     client.readFile(testFile, function (err, file) {
-      console.log('err', err, file.toString())
-      t.equal(err.message, 'Not Found');
+      t.equal(err.message, 'ENOENT: no such file or directory')
       t.end();
     });
   });
-  */
 
   // streaming style APIs
   tap.test(adapter + ' - vfs.createWriteStream - creates a new file stream', function (t) {
@@ -157,6 +202,36 @@ function testAdapter (adapter) {
     readStream.pipe(fileOutput);
 
   });
+
+  tap.test(adapter + ' - vfs.createReadStream - read newly created file as stream - with "./" path', function (t) {
+    var readStream = client.createReadStream('./test-streaming-file.txt');
+
+    if (readStream === "createReadStream-not-available-for-adapter") {
+      adapterCanStream = false;
+      t.ok(readStream, readStream)
+      t.end();
+      return;
+    }
+
+    var fileOutput = new streamBuffers.WritableStreamBuffer({
+        initialSize: (100 * 1024),        // start as 100 kilobytes.
+        incrementAmount: (10 * 1024)    // grow by 10 kilobytes each time buffer overflows.
+    });
+
+    readStream.on('error', function (err) {
+      throw err;
+    });
+
+    readStream.on('end', function () {
+      var buffer = fileOutput.getContents();
+      t.equal(buffer.toString(), 'hello tests');
+      t.end();
+    });
+
+    readStream.pipe(fileOutput);
+
+  });
+
 
   tap.test(adapter + ' - vfs.createWriteStream - update that same file stream', function (t) {
     var writeStream = client.createWriteStream('test-streaming-file.txt');
@@ -227,10 +302,17 @@ function testAdapter (adapter) {
   });
 
   tap.test(adapter + ' - vfs.download - download newly created file - callback style', function (t) {
-    client.download('upload-test-file.txt', function (err, file) {
+    client.download('upload-test-file.txt', function (err, file, vinyl) {
       t.error(err, 'did not error');
-      t.equal(file instanceof File, true, "found a vinyl file");
-      t.equal(file.contents.toString(), 'hello tests');
+      // TODO: is-buffer check
+      // t.equal(isBuffer(file), true, 'returned file as buffer');
+      t.equal(file.toString(), 'hello tests', 'returned file as buffer');
+
+      t.equal(vinyl.contents.toString(), 'hello tests');
+      t.equal(vinyl instanceof File, true, "found a vinyl file");
+      t.equal(vinyl.path, 'upload-test-file.txt');
+      t.end('read new file');
+
       t.end();
     });
   });
@@ -297,10 +379,13 @@ function testAdapter (adapter) {
 
 // rackspace now has failing tests? need to fix. 
 // might just be timing issues with tests running too fast
+testAdapter('google');
+return;
+testAdapter('amazon');
+return;
+return;
 testAdapter('rackspace');
 return;
 testAdapter('sftp');
-testAdapter('google');
 testAdapter('microsoft');
-testAdapter('amazon');
 //return;
