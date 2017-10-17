@@ -11,7 +11,7 @@ module['exports'] = function view (opts, callback) {
       }
       vinyl.forEach(function(item){
         //console.log(req.session.user)
-        var pathWithoutRoot = item.basename.replace(req.session.user + "/", '');
+        var pathWithoutRoot = item.path.replace(req.session.user + "/", '');
         var link = '<a href="/files/readFile?path=' + pathWithoutRoot + '">' + pathWithoutRoot + '</a>';
         $('.userFiles table').append('<tr><td>' + link + '</td>'); //'<td>' + item.basename + '</td></tr>');
       });
