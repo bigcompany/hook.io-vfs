@@ -4,15 +4,14 @@ module['exports'] = function view (opts, callback) {
   if (!req.isAuthenticated()) {
     $('.userFiles').remove();
     callback(null, $.html());
-  } {
-    req.vfs.readdir('', function(err, resp){
+  } else {
+    req.vfs.readdir('', function(err, dir, vinyl){
       if (err) {
         res.end(err.message);
       }
-      resp.forEach(function(item){
-        //console.log('file', item.toJSON());
+      vinyl.forEach(function(item){
         //console.log(req.session.user)
-        var pathWithoutRoot = item.name.replace(req.session.user + "/", '');
+        var pathWithoutRoot = item.basename.replace(req.session.user + "/", '');
         var link = '<a href="/files/readFile?path=' + pathWithoutRoot + '">' + pathWithoutRoot + '</a>';
         $('.userFiles table').append('<tr><td>' + link + '</td>'); //'<td>' + item.basename + '</td></tr>');
       });
