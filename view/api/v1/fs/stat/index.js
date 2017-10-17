@@ -13,9 +13,9 @@ module['exports'] = function statPresenter (opts, cb) {
       return res.end(err.message);
     }
     if (params.vinyl === true) {
-      res.json(vinyl);
+      res.json(vinyl.toJSON());
     } {
-      res.end(stat)
+      res.json(stat)
     }
   });
 };
