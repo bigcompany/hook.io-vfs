@@ -7,7 +7,7 @@ module['exports'] = function view (opts, callback) {
   } else {
     req.vfs.readdir('', function(err, dir, vinyl){
       if (err) {
-        res.end(err.message);
+        return res.end(err.message);
       }
       vinyl.forEach(function(item){
         //console.log(req.session.user)
