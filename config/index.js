@@ -6,6 +6,15 @@ config.http = {
   host: "0.0.0.0"
 };
 
+// TODO: make this able to be passed in to constructor of vfs
+config.app = {
+  name: "hook.io",
+  url: "https://hook.io",
+  domain: "hook.io",
+  logo: "https://hook.io/img/logo.png",
+  adminEmail: "hookmaster@hook.io"
+};
+
 config.adapters = {
   amazon: {
     provider: 'amazon',
